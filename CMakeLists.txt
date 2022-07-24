@@ -16,6 +16,8 @@ target_sources(${PROJECT_NAME} PRIVATE
     src/main.cpp
     src/spinlock/spinlock_tas.cpp
     src/spinlock/spinlock_ttas.cpp
+    src/atomic_snapshot/atomic_snapshot_lockfree.cpp
+    src/atomic_snapshot/atomic_snapshot_waitfree.cpp
 )
 target_link_libraries(${PROJECT_NAME}
     Threads::Threads
