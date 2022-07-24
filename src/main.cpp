@@ -2,11 +2,13 @@
 #include <thread>
 #include <chrono>
 
-#include "spinlock.h"
+#include "spinlock/spinlock_tas.h"
+#include "spinlock/spinlock_ttas.h"
 
 
 template<typename Spinlock>
-void test_spinlock(int iterations) {
+void test_spinlock_increment(int iterations)
+{
     uint32_t counter = 0;
     Spinlock lock;
 
@@ -27,14 +29,19 @@ void test_spinlock(int iterations) {
     t2.join();
 
     std::cout << "Counter: " << counter << std::endl;
-    // assert(counter == iterations * 2);
 }
 
+void test_spinlock()
+{
+    test_spinlock_increment<spinlock_tas>(1'000'000);
+    test_spinlock_increment<spinlock_ttas>(1'000'000);
+}
+
+void register_snapshot_demo();
 
 int main()
 {
-    test_spinlock<spinlock_tas>(1'000'000);
-    test_spinlock<spinlock_ttas>(1'000'000);
+    test_spinlock();
 
     return 0;
 }
